@@ -1,8 +1,7 @@
 package mate.academy.bookstoreappspring.repository;
 
-import mate.academy.bookstoreappspring.model.Book;
-
 import java.util.List;
+import mate.academy.bookstoreappspring.model.Book;
 
 public interface BookRepository {
 
