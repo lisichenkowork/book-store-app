@@ -19,24 +19,4 @@ public class BookStoreAppSpringApplication {
         SpringApplication.run(BookStoreAppSpringApplication.class, args);
     }
 
-    @Bean
-    public CommandLineRunner commandLineRunner() {
-        return new CommandLineRunner() {
-            @Override
-            public void run(String... args) throws Exception {
-                Book book = new Book();
-                book.setTitle("Java for beginners");
-                book.setAuthor("<NAME>");
-                book.setIsbn("1234567890");
-                book.setPrice(BigDecimal.valueOf(100));
-                book.setDescription("Java for beginners book");
-                book.setCoverImage("url");
-
-                bookService.save(book);
-
-                System.out.println(bookService.findAll());
-            }
-        };
-    }
-
 }
