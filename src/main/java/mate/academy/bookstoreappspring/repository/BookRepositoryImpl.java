@@ -34,15 +34,18 @@ public class BookRepositoryImpl implements BookRepository {
             }
             throw new RuntimeException("Can`t add book" + e);
         } finally {
-            session.close();
+            if (session != null) {
+                session.close();
+            }
         }
         return book;
     }
 
     @Override
     public List<Book> findAll() {
-        Session session = sessionFactory.openSession();
-        Query<Book> fromProduct = session.createQuery("FROM Book", Book.class);
-        return fromProduct.getResultList();
+        try (Session session = sessionFactory.openSession()) {
+            Query<Book> fromProduct = session.createQuery("FROM Book", Book.class);
+            return fromProduct.getResultList();
+        }
     }
 }
