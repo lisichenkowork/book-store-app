@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: add column is_deleted at books table
+      author: max
+      changes:
+        - addColumn:
+            tableName: books
+            columns:
+              - column:
+                  name: is_deleted
+                  type: BIT(1)
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false

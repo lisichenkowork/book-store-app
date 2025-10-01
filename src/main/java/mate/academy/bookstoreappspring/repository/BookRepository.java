@@ -5,12 +5,10 @@ import java.util.Optional;
 
 import mate.academy.bookstoreappspring.dto.BookDto;
 import mate.academy.bookstoreappspring.model.Book;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface BookRepository {
+@Repository
+public interface BookRepository extends JpaRepository<Book, Long> {
 
-    Book save(Book book);
-
-    List<Book> getAll();
-
-    Optional<Book> findById(Long id);
 }
