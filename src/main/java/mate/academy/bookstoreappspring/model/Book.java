@@ -34,4 +34,5 @@ public class Book {
 
     private String coverImage;
 
+
 }
