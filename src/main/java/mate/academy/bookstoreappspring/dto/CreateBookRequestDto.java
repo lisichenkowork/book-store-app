@@ -5,13 +5,13 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-public class BookDto {
+public class CreateBookRequestDto {
 
-    private Long id;
     private String title;
     private String author;
     private String isbn;
+    private BigDecimal price;
     private String description;
     private String coverImage;
-    private BigDecimal price;
+    private boolean isDeleted = false;
 }

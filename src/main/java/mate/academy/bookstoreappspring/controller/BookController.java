@@ -1,22 +1,26 @@
 package mate.academy.bookstoreappspring.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookstoreappspring.dto.BookDto;
-import mate.academy.bookstoreappspring.model.Book;
+import mate.academy.bookstoreappspring.dto.CreateBookRequestDto;
+import mate.academy.bookstoreappspring.dto.UpdateBookRequestDto;
 import mate.academy.bookstoreappspring.service.BookService;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/books")
+@RequestMapping("/api/books")
 public class BookController {
 
     private final BookService bookService;
@@ -32,7 +36,21 @@ public class BookController {
     }
 
     @PostMapping
-    public BookDto createBook(@RequestBody Book book) {
-        return bookService.createBook(book);
+    public BookDto createBook(@Valid @RequestBody CreateBookRequestDto createBookRequestDto) {
+        return bookService.createBook(createBookRequestDto);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        bookService.deleteById(id);
+    }
+
+    @PutMapping("/{id}")
+    public BookDto updateBook(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateBookRequestDto updateBookRequestDto) {
+
+        return bookService.updateById(id, updateBookRequestDto);
     }
 }
