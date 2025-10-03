@@ -10,5 +10,5 @@ import org.mapstruct.NullValueCheckStrategy;
         implementationPackage = "bookstoreappspring.impl"
 )
 
-public class MapperConfig {
+public interface MapperConfig {
 }

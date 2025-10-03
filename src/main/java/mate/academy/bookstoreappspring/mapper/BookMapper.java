@@ -8,7 +8,7 @@ import mate.academy.bookstoreappspring.dto.CreateBookRequestDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
-@Mapper(config = MapperConfig.class)
+@Mapper(config = MapperConfig.class, componentModel = "spring")
 public interface BookMapper {
 
     BookDto toDto(Book book);

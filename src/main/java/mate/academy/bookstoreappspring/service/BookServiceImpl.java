@@ -54,6 +54,5 @@ public class BookServiceImpl implements BookService {
 
         Book updatedBook = bookRepository.save(book);
         return bookMapper.toDto(updatedBook);
-
     }
 }
