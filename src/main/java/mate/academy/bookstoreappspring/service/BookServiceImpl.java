@@ -1,8 +1,6 @@
 package mate.academy.bookstoreappspring.service;
 
 import java.util.List;
-import java.util.Optional;
-
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookstoreappspring.dto.BookDto;
 import mate.academy.bookstoreappspring.dto.UpdateBookRequestDto;
@@ -30,7 +28,8 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto findById(Long id) {
         return bookMapper.toDto(bookRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Book is not found")));
+                .orElseThrow(() -> new EntityNotFoundException("Book with id %d not found".formatted(id)))
+        );
     }
 
     @Override
@@ -40,9 +39,10 @@ public class BookServiceImpl implements BookService {
                 .toList();
     }
 
-    @Override
     public void deleteById(Long id) {
-        bookRepository.deleteById(id);
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Book with id %d not found".formatted(id)));
+        bookRepository.delete(book);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package mate.academy.bookstoreappspring.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookstoreappspring.dto.BookDto;
 import mate.academy.bookstoreappspring.dto.CreateBookRequestDto;
@@ -13,15 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/books")
+@RequestMapping("/api/books")
 public class BookController {
 
     private final BookService bookService;
@@ -37,7 +36,7 @@ public class BookController {
     }
 
     @PostMapping
-    public BookDto createBook(@RequestBody CreateBookRequestDto createBookRequestDto) {
+    public BookDto createBook(@Valid @RequestBody CreateBookRequestDto createBookRequestDto) {
         return bookService.createBook(createBookRequestDto);
     }
 
@@ -50,7 +49,7 @@ public class BookController {
     @PutMapping("/{id}")
     public BookDto updateBook(
             @PathVariable Long id,
-            @RequestBody UpdateBookRequestDto updateBookRequestDto) {
+            @Valid @RequestBody UpdateBookRequestDto updateBookRequestDto) {
 
         return bookService.updateById(id, updateBookRequestDto);
     }
