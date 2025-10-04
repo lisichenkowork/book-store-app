@@ -10,13 +10,15 @@ import java.util.Arrays;
 @Component
 public class AuthorSpecificationProvider implements SpecificationProvider {
 
+    private static final String AUTHOR_FIELD_NAME = "author";
+
     @Override
     public String getKey() {
-        return "author";
+        return AUTHOR_FIELD_NAME;
     }
 
     public Specification<Book> getSpecification(String[] params) {
         return (root, query, cb)
-                -> root.get("author").in(Arrays.stream(params).toList());
+                -> root.get(AUTHOR_FIELD_NAME).in(Arrays.stream(params).toList());
     }
 }

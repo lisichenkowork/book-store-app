@@ -8,6 +8,9 @@ import mate.academy.bookstoreappspring.repository.SpecificationProviderManager;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Component
 @RequiredArgsConstructor
 public class BookSpecificationBuilder implements SpecificationBuilder<Book> {
@@ -18,14 +21,16 @@ public class BookSpecificationBuilder implements SpecificationBuilder<Book> {
     public Specification<Book> build(BookSearchParamsDto bookSearchParams) {
         Specification<Book> spec = Specification.allOf();
 
-        if(bookSearchParams.title() != null && bookSearchParams.title().length > 0) {
-            spec = spec.and(specificationProviderManager.getSpecificationProvider("title")
-                    .getSpecification(bookSearchParams.title()));
-        }
+        Map<String, String[]> map = new HashMap<>();
 
-        if(bookSearchParams.author() != null && bookSearchParams.author().length > 0) {
-            spec = spec.and(specificationProviderManager.getSpecificationProvider("author")
-                    .getSpecification(bookSearchParams.author()));
+        map.put("titles", bookSearchParams.titles());
+        map.put("authors", bookSearchParams.authors());
+
+        for (Map.Entry<String, String[]> entry : map.entrySet()) {
+            if (entry.getValue() != null && entry.getValue().length > 0) {
+                spec = spec.and(specificationProviderManager.getSpecificationProvider(entry.getKey())
+                        .getSpecification(entry.getValue()));
+            }
         }
 
         return spec;

@@ -14,10 +14,10 @@ public class BookSpecificationProviderManager<Book> implements SpecificationProv
 
     private final List<SpecificationProvider<Book>> providers;
 
-
     @Override
     public SpecificationProvider<Book> getSpecificationProvider(String key) {
-        return providers.stream().filter(p -> p.getKey().equals(key))
+        return providers.stream()
+                .filter(p -> p.getKey().equals(key))
                 .findFirst()
                 .orElseThrow(
                         () -> new ProviderNotFoundException("Provider is not found, key " + key + " doesn't exist"));
