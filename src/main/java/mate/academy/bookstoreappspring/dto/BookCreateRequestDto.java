@@ -1,14 +1,17 @@
 package mate.academy.bookstoreappspring.dto;
 
-import jdk.jfr.DataAmount;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
-public class UpdateBookRequestDto {
+public class BookCreateRequestDto {
+
     private String title;
     private String author;
     private String isbn;
+    private BigDecimal price;
     private String description;
     private String coverImage;
-    private Double price;
+    private boolean isDeleted = false;
 }
