@@ -32,31 +32,41 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public BookDto getBookById(@PathVariable Long id) {
+    public BookDto getBookById(
+            @PathVariable
+            Long id) {
         return bookService.findById(id);
     }
 
     @PostMapping
-    public BookDto createBook(@Valid @RequestBody BookCreateRequestDto createBookRequestDto) {
+    public BookDto createBook(
+            @Valid
+            @RequestBody
+            BookCreateRequestDto createBookRequestDto) {
         return bookService.createBook(createBookRequestDto);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(
+            @PathVariable
+            Long id) {
         bookService.deleteById(id);
     }
 
     @PutMapping("/{id}")
     public BookDto updateBook(
             @PathVariable Long id,
-            @Valid @RequestBody BookUpdateRequestDto updateBookRequestDto) {
+            @Valid
+            @RequestBody
+            BookUpdateRequestDto updateBookRequestDto) {
 
         return bookService.updateById(id, updateBookRequestDto);
     }
 
     @GetMapping("/search")
-    public List<BookDto> search(BookSearchParamsDto bookSearchParams){
+    public List<BookDto> search(
+            BookSearchParamsDto bookSearchParams){
         return bookService.search(bookSearchParams);
     }
 }
