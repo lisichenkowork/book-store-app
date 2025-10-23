@@ -3,23 +3,28 @@ package mate.academy.bookstoreappspring.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-import mate.academy.bookstoreappspring.dto.BookDto;
 import mate.academy.bookstoreappspring.dto.BookCreateRequestDto;
+import mate.academy.bookstoreappspring.dto.BookDto;
 import mate.academy.bookstoreappspring.dto.BookSearchParamsDto;
 import mate.academy.bookstoreappspring.dto.BookUpdateRequestDto;
 import mate.academy.bookstoreappspring.service.BookService;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 @Tag(
         name = "Books",
-        description = "Endpoints for managing books: create, read, update, delete, and search operations"
+        description = "Endpoints for managing books: create, read, update, delete, search"
 )
 @RequiredArgsConstructor
 @RestController
@@ -78,7 +83,7 @@ public class BookController {
     @Operation(
             summary = "Update existing book",
             description = "Updates the details of an existing book identified by ID. "
-                    + "The updated data must be provided in the request body as BookUpdateRequestDto."
+                    + "The data must be provided in the request body as BookUpdateRequestDto."
     )
     public BookDto updateBook(
             @PathVariable Long id,
@@ -94,8 +99,7 @@ public class BookController {
                     + "(such as author, title, etc.) provided in BookSearchParamsDto. "
                     + "Returns a list of matching BookDto objects."
     )
-    public List<BookDto> search(
-            BookSearchParamsDto bookSearchParams) {
-        return bookService.search(bookSearchParams);
+    public List<BookDto> search(BookSearchParamsDto bookSearchParams, Pageable pageable) {
+        return bookService.search(bookSearchParams, pageable);
     }
 }

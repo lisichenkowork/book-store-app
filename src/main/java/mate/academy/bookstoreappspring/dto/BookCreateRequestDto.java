@@ -1,12 +1,10 @@
 package mate.academy.bookstoreappspring.dto;
 
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-
 import java.math.BigDecimal;
+import lombok.Data;
 
 @Data
 public class BookCreateRequestDto {
@@ -17,7 +15,7 @@ public class BookCreateRequestDto {
     private String author;
     @NotBlank
     private String isbn;
-    @NotBlank
+    @NotNull
     @DecimalMin("0.0")
     private BigDecimal price;
     @NotBlank
