@@ -1,14 +1,13 @@
 package mate.academy.bookstoreappspring.repository.book.spec;
 
+import java.util.Arrays;
 import mate.academy.bookstoreappspring.model.Book;
 import mate.academy.bookstoreappspring.repository.SpecificationProvider;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-
 @Component
-public class AuthorSpecificationProvider implements SpecificationProvider {
+public class AuthorSpecificationProvider implements SpecificationProvider<Book> {
 
     private static final String AUTHOR_FIELD_NAME = "author";
 
