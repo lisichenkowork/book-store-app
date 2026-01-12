@@ -46,7 +46,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return objectError.getDefaultMessage();
     }
 
-
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<?> handleEntityNotFound(EntityNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
