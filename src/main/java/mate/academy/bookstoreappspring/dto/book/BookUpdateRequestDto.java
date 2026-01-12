@@ -1,4 +1,4 @@
-package mate.academy.bookstoreappspring.dto;
+package mate.academy.bookstoreappspring.dto.book;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;

@@ -1,4 +1,4 @@
-package mate.academy.bookstoreappspring.dto;
+package mate.academy.bookstoreappspring.dto.book;
 
 public record BookSearchParamsDto(
         String[] authors,

@@ -3,7 +3,7 @@ package mate.academy.bookstoreappspring.repository.book;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
-import mate.academy.bookstoreappspring.dto.BookSearchParamsDto;
+import mate.academy.bookstoreappspring.dto.book.BookSearchParamsDto;
 import mate.academy.bookstoreappspring.model.Book;
 import mate.academy.bookstoreappspring.repository.SpecificationBuilder;
 import mate.academy.bookstoreappspring.repository.SpecificationProviderManager;
