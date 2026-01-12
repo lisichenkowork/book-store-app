@@ -40,14 +40,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     private String getErrorMessage(ObjectError objectError) {
-        if (objectError instanceof FieldError) {
-            String defaultMessage = objectError.getDefaultMessage();
-            String field = ((FieldError) objectError).getField();
-
-            return field + " " + defaultMessage;
+        if (objectError instanceof FieldError fieldError) {
+            return fieldError.getField() + ": " + fieldError.getDefaultMessage();
         }
         return objectError.getDefaultMessage();
     }
+
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<?> handleEntityNotFound(EntityNotFoundException ex) {
@@ -59,6 +57,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handleProviderNotFound(ProviderNotFoundException ex) {
         return ResponseEntity.badRequest()
                 .body(body(HttpStatus.BAD_REQUEST, ex.getMessage()));
+    }
+
+    @ExceptionHandler(RegistrationException.class)
+    public ResponseEntity<?> handleRegistrationException(RegistrationException ex) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(ex.getMessage());
     }
 
     private Map<String, Object> body(HttpStatus status, String message) {

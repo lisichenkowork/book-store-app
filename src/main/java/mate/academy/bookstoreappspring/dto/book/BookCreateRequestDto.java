@@ -16,12 +16,10 @@ public class BookCreateRequestDto {
     @NotBlank
     private String isbn;
     @NotNull
-    @DecimalMin("0.0")
+    @DecimalMin(value = "0.0", inclusive = false)
     private BigDecimal price;
     @NotBlank
     private String description;
     @NotBlank
     private String coverImage;
-
-    private boolean isDeleted = false;
 }
