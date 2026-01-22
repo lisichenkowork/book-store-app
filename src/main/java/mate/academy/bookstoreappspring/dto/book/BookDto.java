@@ -1,8 +1,7 @@
-package mate.academy.bookstoreappspring.dto;
-
-import lombok.Data;
+package mate.academy.bookstoreappspring.dto.book;
 
 import java.math.BigDecimal;
+import lombok.Data;
 
 @Data
 public class BookDto {
@@ -14,4 +13,5 @@ public class BookDto {
     private String description;
     private String coverImage;
     private BigDecimal price;
+    private boolean isDeleted = false;
 }

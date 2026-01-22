@@ -1,15 +1,13 @@
-package mate.academy.bookstoreappspring.dto;
+package mate.academy.bookstoreappspring.dto.book;
 
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import lombok.Data;
 
-import java.math.BigDecimal;
-
 @Data
-public class BookCreateRequestDto {
+public class BookUpdateRequestDto {
 
     @NotBlank
     private String title;
@@ -18,12 +16,10 @@ public class BookCreateRequestDto {
     @NotBlank
     private String isbn;
     @NotBlank
-    @DecimalMin("0.0")
-    private BigDecimal price;
-    @NotBlank
     private String description;
     @NotBlank
     private String coverImage;
-
-    private boolean isDeleted = false;
+    @NotNull
+    @DecimalMin(value = "0.0", inclusive = false)
+    private BigDecimal price;
 }
