@@ -1,6 +1,5 @@
 package mate.academy.bookstoreappspring.service.user;
 
-import java.util.List;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookstoreappspring.dto.user.UserRegistrationRequestDto;
@@ -35,7 +34,7 @@ public class UserServiceImpl implements UserService {
         User entity = userMapper.toEntity(userRegistrationRequestDto);
 
         entity.setPassword(passwordEncoder.encode(entity.getPassword()));
-        entity.setRoles(Set.of(userRole ));
+        entity.setRoles(Set.of(userRole));
 
         User saved = userRepository.save(entity);
 
