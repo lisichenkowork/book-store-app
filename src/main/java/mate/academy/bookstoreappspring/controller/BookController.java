@@ -57,7 +57,7 @@ public class BookController {
         return bookService.findById(id);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @Operation(
             security = @SecurityRequirement(name = "basicAuth"),
@@ -71,7 +71,7 @@ public class BookController {
         return bookService.createBook(createBookRequestDto);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     @Operation(
@@ -86,7 +86,7 @@ public class BookController {
         bookService.deleteById(id);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     @Operation(
             security = @SecurityRequirement(name = "basicAuth"),
