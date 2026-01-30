@@ -43,7 +43,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         if (objectError instanceof FieldError fieldError) {
             return fieldError.getField() + ": " + fieldError.getDefaultMessage();
         }
-        return objectError.getDefaultMessage();
+        return "Validation error: " + objectError.getDefaultMessage();
     }
 
     @ExceptionHandler(EntityNotFoundException.class)

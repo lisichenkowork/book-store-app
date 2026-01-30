@@ -1,6 +1,7 @@
 package mate.academy.bookstoreappspring.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -12,6 +13,7 @@ import mate.academy.bookstoreappspring.dto.book.BookUpdateRequestDto;
 import mate.academy.bookstoreappspring.service.BookService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -54,8 +57,10 @@ public class BookController {
         return bookService.findById(id);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     @Operation(
+            security = @SecurityRequirement(name = "basicAuth"),
             summary = "Create a new book",
             description = "Creates and saves a new book in the database using the provided data. "
                     + "All required fields must be valid and included in the request body."
@@ -66,9 +71,11 @@ public class BookController {
         return bookService.createBook(createBookRequestDto);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     @Operation(
+            security = @SecurityRequirement(name = "basicAuth"),
             summary = "Delete book by ID",
             description = "Removes the book with the specified ID from the database. "
                     + "If the book does not exist, an error is returned. "
@@ -79,8 +86,10 @@ public class BookController {
         bookService.deleteById(id);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     @Operation(
+            security = @SecurityRequirement(name = "basicAuth"),
             summary = "Update existing book",
             description = "Updates the details of an existing book identified by ID. "
                     + "The data must be provided in the request body as BookUpdateRequestDto."
@@ -99,7 +108,12 @@ public class BookController {
                     + "(such as author, title, etc.) provided in BookSearchParamsDto. "
                     + "Returns a list of matching BookDto objects."
     )
-    public List<BookDto> search(BookSearchParamsDto bookSearchParams, Pageable pageable) {
-        return bookService.search(bookSearchParams, pageable);
+    public List<BookDto> search(
+            @RequestParam(required = false) String[] authors,
+            @RequestParam(required = false) String[] titles,
+            Pageable pageable) {
+        BookSearchParamsDto params = new BookSearchParamsDto(authors, titles);
+        return bookService.search(params, pageable);
     }
+
 }

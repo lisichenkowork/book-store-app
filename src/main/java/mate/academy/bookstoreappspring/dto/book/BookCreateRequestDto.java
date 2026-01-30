@@ -9,17 +9,23 @@ import lombok.Data;
 @Data
 public class BookCreateRequestDto {
 
-    @NotBlank
+    @NotBlank(message = "Title is required")
     private String title;
-    @NotBlank
+
+    @NotBlank(message = "Author is required")
     private String author;
-    @NotBlank
+
+    @NotBlank(message = "ISBN is required")
     private String isbn;
-    @NotNull
-    @DecimalMin(value = "0.0", inclusive = false)
+
+    @NotNull(message = "Price is required")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than 0")
     private BigDecimal price;
-    @NotBlank
+
+    @NotBlank(message = "Description is required")
     private String description;
-    @NotBlank
+
+    @NotBlank(message = "Cover image is required")
     private String coverImage;
+
 }
