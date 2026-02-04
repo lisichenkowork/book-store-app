@@ -1,5 +1,7 @@
 package mate.academy.bookstoreappspring.security.filter;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -7,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookstoreappspring.util.JwtUtil;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,16 +34,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = getToken(request);
 
-        if (token != null && jwtUtil.isValidToken(token)) {
-            String username = jwtUtil.getUsername(token);
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        if (token != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            Authentication authentication = new UsernamePasswordAuthenticationToken(
-                    userDetails,
-                    null,
-                    userDetails.getAuthorities()
-            );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            try {
+                Claims claims = jwtUtil.parseToken(token);
+                String username = jwtUtil.getUsername(claims);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                Authentication authentication = new UsernamePasswordAuthenticationToken(
+                        userDetails,
+                        null,
+                        userDetails.getAuthorities()
+                );
+
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            } catch (JwtException | IllegalArgumentException e) {
+                throw new BadCredentialsException("Invalid token ", e);
+            }
         }
 
         filterChain.doFilter(request, response);
