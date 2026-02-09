@@ -8,10 +8,10 @@ databaseChangeLog:
             columns:
               - column:
                   name: email
-                  value: "user1@gmail.com"
+                  value: "user@gmail.com"
               - column:
                   name: password
-                  value: "$2a$12$C5TWcsFTo4xWUKgoQfSOG.PEYryr3p/xt4SQCpNsl5n57zaaD25Hy"
+                  value: "$2a$12$.VnycuaxazNzkiW865AzEeTqY6rQgEsFToaP5c01bhKwpvvqdr4JS"
               - column:
                   name: first_name
                   value: "Mateusz"
@@ -27,10 +27,10 @@ databaseChangeLog:
             columns:
               - column:
                   name: email
-                  value: "admin1@gmail.com"
+                  value: "admin@gmail.com"
               - column:
                   name: password
-                  value: "$2a$12$C5TWcsFTo4xWUKgoQfSOG.PEYryr3p/xt4SQCpNsl5n57zaaD25Hy"
+                  value: "$2a$12$.VnycuaxazNzkiW865AzEeTqY6rQgEsFToaP5c01bhKwpvvqdr4JS"
               - column:
                   name: first_name
                   value: "Rafal"

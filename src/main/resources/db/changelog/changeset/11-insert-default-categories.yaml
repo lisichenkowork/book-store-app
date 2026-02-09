@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: 11-insert-default-categories
+      author: max
+      changes:
+        - insert:
+            tableName: categories
+            columns:
+              - column:
+                  name: name
+                  value: "Science Fiction"
+              - column:
+                  name: description
+                  value: "Books about futuristic concepts and science-based stories"
+              - column:
+                  name: is_deleted
+                  valueBoolean: false
+        - insert:
+            tableName: categories
+            columns:
+              - column:
+                  name: name
+                  value: "Fantasy"
+              - column:
+                  name: description
+                  value: "Books with magical, mythical, or supernatural themes"
+              - column:
+                  name: is_deleted
+                  valueBoolean: false

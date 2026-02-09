@@ -4,6 +4,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookstoreappspring.dto.book.BookCreateRequestDto;
 import mate.academy.bookstoreappspring.dto.book.BookDto;
+import mate.academy.bookstoreappspring.dto.book.BookDtoWithoutCategoryIds;
 import mate.academy.bookstoreappspring.dto.book.BookSearchParamsDto;
 import mate.academy.bookstoreappspring.dto.book.BookUpdateRequestDto;
 import mate.academy.bookstoreappspring.exception.EntityNotFoundException;
@@ -25,17 +26,16 @@ public class BookServiceImpl implements BookService {
     private final BookSpecificationBuilder bookSpecificationBuilder;
 
     @Override
-    public BookDto createBook(BookCreateRequestDto createBookRequestDto) {
-        Book model = bookMapper.toModel(createBookRequestDto);
-        return bookMapper.toDto(bookRepository.save(model));
+    public BookDto createBook(BookCreateRequestDto dto) {
+
+        Book entity = bookMapper.toEntity(dto);
+
+        return bookMapper.toDto(bookRepository.save(entity));
     }
 
     @Override
     public BookDto findById(Long id) {
-        return bookMapper.toDto(bookRepository.findById(id)
-                .orElseThrow(()
-                        -> new EntityNotFoundException("Book with id %d not found".formatted(id)))
-        );
+        return bookMapper.toDto(getEntityByIdOrThrow(id));
     }
 
     @Override
@@ -48,22 +48,20 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void deleteById(Long id) {
-        Book book = bookRepository.findById(id)
-                .orElseThrow(()
-                        -> new EntityNotFoundException("Book with id %d not found".formatted(id)));
+        Book book = getEntityByIdOrThrow(id);
+
         bookRepository.delete(book);
     }
 
     @Override
     public BookDto updateById(Long id, BookUpdateRequestDto updateBookRequestDto) {
-        Book book = bookRepository.findById(id)
-                .orElseThrow(() ->
-                        new EntityNotFoundException("Book with id %d not found".formatted(id)));
+        Book entity = getEntityByIdOrThrow(id);
 
-        bookMapper.updateModelFromDto(updateBookRequestDto, book);
+        bookMapper.updateBook(updateBookRequestDto, entity);
 
-        Book updatedBook = bookRepository.save(book);
-        return bookMapper.toDto(updatedBook);
+        bookRepository.save(entity);
+
+        return bookMapper.toDto(entity);
     }
 
     @Override
@@ -75,5 +73,20 @@ public class BookServiceImpl implements BookService {
         return bookPage.getContent().stream()
                 .map(bookMapper::toDto)
                 .toList();
+    }
+
+    @Override
+    public List<BookDtoWithoutCategoryIds> getBooksByCategoryId(Long id, Pageable pageable) {
+
+        return bookRepository.findAllByCategories_id(id, pageable)
+                .stream()
+                .map(bookMapper::toDtoWithoutCategoryIds)
+                .toList();
+    }
+
+    private Book getEntityByIdOrThrow(Long id) {
+        return bookRepository.findById(id)
+                .orElseThrow(()
+                        -> new EntityNotFoundException("Book with id %d not found".formatted(id)));
     }
 }

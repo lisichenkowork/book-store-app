@@ -8,22 +8,22 @@ databaseChangeLog:
             columns:
               - column:
                   name: title
-                  value: "Clean Code"
+                  value: "The Left Hand of Darkness"
               - column:
                   name: author
-                  value: "Robert C. Martin"
+                  value: "Ursula K. Le Guin"
               - column:
                   name: isbn
-                  value: "9780132350884"
+                  value: "9780441478125"
               - column:
                   name: price
-                  valueNumeric: 45.99
+                  valueNumeric: 39.90
               - column:
                   name: description
-                  value: "A Handbook of Agile Software Craftsmanship"
+                  value: "A science fiction novel exploring gender, politics, and culture on the planet Gethen."
               - column:
                   name: cover_image
-                  value: "cleancode.jpg"
+                  value: "left_hand_of_darkness.jpg"
               - column:
                   name: is_deleted
                   valueBoolean: false
@@ -33,97 +33,22 @@ databaseChangeLog:
             columns:
               - column:
                   name: title
-                  value: "Effective Java"
+                  value: "The Black Company"
               - column:
                   name: author
-                  value: "Joshua Bloch"
+                  value: "Glen Cook"
               - column:
                   name: isbn
-                  value: "9780134685991"
+                  value: "9780812521392"
               - column:
                   name: price
-                  valueNumeric: 55.50
+                  valueNumeric: 42.50
               - column:
                   name: description
-                  value: "Best practices for Java programming"
+                  value: "A dark fantasy novel following a mercenary company serving powerful and dangerous rulers."
               - column:
                   name: cover_image
-                  value: "effectivejava.jpg"
-              - column:
-                  name: is_deleted
-                  valueBoolean: false
-
-        - insert:
-            tableName: books
-            columns:
-              - column:
-                  name: title
-                  value: "Java Concurrency in Practice"
-              - column:
-                  name: author
-                  value: "Brian Goetz"
-              - column:
-                  name: isbn
-                  value: "9780321349606"
-              - column:
-                  name: price
-                  valueNumeric: 49.99
-              - column:
-                  name: description
-                  value: "Comprehensive guide to concurrency in Java"
-              - column:
-                  name: cover_image
-                  value: "javaconcurrency.jpg"
-              - column:
-                  name: is_deleted
-                  valueBoolean: false
-
-        - insert:
-            tableName: books
-            columns:
-              - column:
-                  name: title
-                  value: "Spring in Action"
-              - column:
-                  name: author
-                  value: "Craig Walls"
-              - column:
-                  name: isbn
-                  value: "9781617294945"
-              - column:
-                  name: price
-                  valueNumeric: 59.99
-              - column:
-                  name: description
-                  value: "Comprehensive guide to Spring framework"
-              - column:
-                  name: cover_image
-                  value: "springinaction.jpg"
-              - column:
-                  name: is_deleted
-                  valueBoolean: false
-
-        - insert:
-            tableName: books
-            columns:
-              - column:
-                  name: title
-                  value: "Head First Java"
-              - column:
-                  name: author
-                  value: "Kathy Sierra & Bert Bates"
-              - column:
-                  name: isbn
-                  value: "9780596009205"
-              - column:
-                  name: price
-                  valueNumeric: 39.99
-              - column:
-                  name: description
-                  value: "A brain-friendly guide to Java programming"
-              - column:
-                  name: cover_image
-                  value: "headfirstjava.jpg"
+                  value: "black_company.jpg"
               - column:
                   name: is_deleted
                   valueBoolean: false
