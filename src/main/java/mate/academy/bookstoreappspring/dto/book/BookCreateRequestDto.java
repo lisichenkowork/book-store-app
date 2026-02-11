@@ -26,5 +26,4 @@ public class BookCreateRequestDto {
     private String coverImage;
     @NotEmpty(message = "Categories are required")
     private Set<Long> categories;
-
 }
