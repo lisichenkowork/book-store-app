@@ -1,9 +1,7 @@
 package mate.academy.bookstoreappspring.mapper;
 
 import mate.academy.bookstoreappspring.config.MapperConfig;
-import mate.academy.bookstoreappspring.dto.category.CategoryCreateRequestDto;
 import mate.academy.bookstoreappspring.dto.category.CategoryDto;
-import mate.academy.bookstoreappspring.dto.category.CategoryUpdateRequestDto;
 import mate.academy.bookstoreappspring.model.Category;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
@@ -15,11 +13,11 @@ public interface CategoryMapper {
 
     CategoryDto toDto(Category category);
 
-    Category toEntity(CategoryCreateRequestDto dto);
+    Category toEntity(CategoryDto dto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateEntityFromDto(
-            CategoryUpdateRequestDto dto,
+            CategoryDto dto,
             @MappingTarget Category entity);
 
 }

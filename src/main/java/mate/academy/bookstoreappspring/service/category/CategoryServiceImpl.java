@@ -1,16 +1,14 @@
 package mate.academy.bookstoreappspring.service.category;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookstoreappspring.dto.book.BookDtoWithoutCategoryIds;
-import mate.academy.bookstoreappspring.dto.category.CategoryCreateRequestDto;
 import mate.academy.bookstoreappspring.dto.category.CategoryDto;
-import mate.academy.bookstoreappspring.dto.category.CategoryUpdateRequestDto;
 import mate.academy.bookstoreappspring.exception.EntityNotFoundException;
 import mate.academy.bookstoreappspring.mapper.CategoryMapper;
 import mate.academy.bookstoreappspring.model.Category;
 import mate.academy.bookstoreappspring.repository.category.CategoryRepository;
 import mate.academy.bookstoreappspring.service.BookService;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -22,14 +20,12 @@ public class CategoryServiceImpl implements CategoryService {
     private final BookService bookService;
     private final CategoryMapper mapper;
 
-    public List<CategoryDto> findAll(Pageable pageable) {
+    public Page<CategoryDto> findAll(Pageable pageable) {
         return categoryRepository.findAll(pageable)
-                .stream()
-                .map(mapper::toDto)
-                .toList();
+                .map(mapper::toDto);
     }
 
-    public CategoryDto save(CategoryCreateRequestDto dto) {
+    public CategoryDto save(CategoryDto dto) {
         Category entity = mapper.toEntity(dto);
 
         Category saved = categoryRepository.save(entity);
@@ -43,7 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
         return mapper.toDto(categoryById);
     }
 
-    public CategoryDto update(Long id, CategoryUpdateRequestDto dto) {
+    public CategoryDto update(Long id, CategoryDto dto) {
         Category categoryById = getByIdOrThrow(id);
 
         mapper.updateEntityFromDto(dto, categoryById);
@@ -53,13 +49,13 @@ public class CategoryServiceImpl implements CategoryService {
         return mapper.toDto(saved);
     }
 
-    public void delete(Long id) {
+    public void deleteById(Long id) {
         Category categoryById = getByIdOrThrow(id);
 
         categoryRepository.delete(categoryById);
     }
 
-    public List<BookDtoWithoutCategoryIds> getBooksByCategoryId(Long id, Pageable pageable) {
+    public Page<BookDtoWithoutCategoryIds> getBooksByCategoryId(Long id, Pageable pageable) {
         existsByIdOrThrow(id);
         return bookService.getBooksByCategoryId(id, pageable);
     }

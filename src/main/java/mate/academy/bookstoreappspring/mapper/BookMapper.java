@@ -2,10 +2,10 @@ package mate.academy.bookstoreappspring.mapper;
 
 import java.util.Set;
 import java.util.stream.Collectors;
-import mate.academy.bookstoreappspring.dto.book.BookCreateRequestDto;
 import mate.academy.bookstoreappspring.dto.book.BookDto;
 import mate.academy.bookstoreappspring.dto.book.BookDtoWithoutCategoryIds;
 import mate.academy.bookstoreappspring.dto.book.BookUpdateRequestDto;
+import mate.academy.bookstoreappspring.dto.book.CreateBookRequestDto;
 import mate.academy.bookstoreappspring.model.Book;
 import mate.academy.bookstoreappspring.model.Category;
 import org.mapstruct.AfterMapping;
@@ -21,7 +21,7 @@ import org.mapstruct.ReportingPolicy;
 public interface BookMapper {
 
     @Mapping(target = "categories", ignore = true)
-    Book toEntity(BookCreateRequestDto dto);
+    Book toEntity(CreateBookRequestDto dto);
 
     @Mapping(target = "categories", ignore = true)
     BookDto toDto(Book book);
@@ -53,16 +53,19 @@ public interface BookMapper {
 
     @AfterMapping
     default void mapCategoriesToIds(@MappingTarget BookDto dto, Book entity) {
-        Set<Long> ids = entity.getCategories()
+
+        Set<Long> ids = (entity.getCategories() != null)
+                ? entity.getCategories()
                 .stream()
                 .map(Category::getId)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toSet())
+                : Set.of();
 
         dto.setCategories(ids);
     }
 
     @AfterMapping
-    default void setCategoryIds(@MappingTarget Book entity, BookCreateRequestDto dto) {
+    default void setCategoryIds(@MappingTarget Book entity, CreateBookRequestDto dto) {
         Set<Category> categories = dto.getCategories().stream()
                 .map(id -> {
                     Category category = new Category();

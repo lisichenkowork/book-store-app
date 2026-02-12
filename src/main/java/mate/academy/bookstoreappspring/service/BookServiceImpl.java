@@ -1,12 +1,11 @@
 package mate.academy.bookstoreappspring.service;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
-import mate.academy.bookstoreappspring.dto.book.BookCreateRequestDto;
 import mate.academy.bookstoreappspring.dto.book.BookDto;
 import mate.academy.bookstoreappspring.dto.book.BookDtoWithoutCategoryIds;
 import mate.academy.bookstoreappspring.dto.book.BookSearchParamsDto;
 import mate.academy.bookstoreappspring.dto.book.BookUpdateRequestDto;
+import mate.academy.bookstoreappspring.dto.book.CreateBookRequestDto;
 import mate.academy.bookstoreappspring.exception.EntityNotFoundException;
 import mate.academy.bookstoreappspring.mapper.BookMapper;
 import mate.academy.bookstoreappspring.model.Book;
@@ -26,7 +25,7 @@ public class BookServiceImpl implements BookService {
     private final BookSpecificationBuilder bookSpecificationBuilder;
 
     @Override
-    public BookDto createBook(BookCreateRequestDto dto) {
+    public BookDto createBook(CreateBookRequestDto dto) {
 
         Book entity = bookMapper.toEntity(dto);
 
@@ -39,11 +38,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> getAllBooks(Pageable pageable) {
+    public Page<BookDto> getAllBooks(Pageable pageable) {
         return bookRepository.findAll(pageable)
-                .stream()
-                .map(bookMapper::toDto)
-                .toList();
+                .map(bookMapper::toDto);
     }
 
     @Override
@@ -65,23 +62,19 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> search(BookSearchParamsDto bookSearchParams, Pageable pageable) {
+    public Page<BookDto> search(BookSearchParamsDto bookSearchParams, Pageable pageable) {
         Specification<Book> spec = bookSpecificationBuilder.build(bookSearchParams);
 
-        Page<Book> bookPage = bookRepository.findAll(spec, pageable);
+        return bookRepository.findAll(spec, pageable)
+                .map(bookMapper::toDto);
 
-        return bookPage.getContent().stream()
-                .map(bookMapper::toDto)
-                .toList();
     }
 
     @Override
-    public List<BookDtoWithoutCategoryIds> getBooksByCategoryId(Long id, Pageable pageable) {
+    public Page<BookDtoWithoutCategoryIds> getBooksByCategoryId(Long id, Pageable pageable) {
 
         return bookRepository.findAllByCategories_id(id, pageable)
-                .stream()
-                .map(bookMapper::toDtoWithoutCategoryIds)
-                .toList();
+                .map(bookMapper::toDtoWithoutCategoryIds);
     }
 
     private Book getEntityByIdOrThrow(Long id) {
