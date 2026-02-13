@@ -40,7 +40,7 @@ public class CategoryController {
     }
 
     @Operation(summary = "Create new category")
-    @ApiResponse(responseCode = "200", description = "Category created successfully",
+    @ApiResponse(responseCode = "201", description = "Category created successfully",
             content = @Content(schema = @Schema(implementation = CategoryDto.class)))
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ADMIN')")
