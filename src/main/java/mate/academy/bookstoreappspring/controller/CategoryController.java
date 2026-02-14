@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,58 +29,124 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/categories")
 @RequiredArgsConstructor
-@Tag(name = "Categories", description = "Operations for categories")
+@Tag(name = "Categories", description = "Endpoints for managing book categories")
 public class CategoryController {
 
     private final CategoryService categoryService;
 
-    @Operation(summary = "Get all categories with pagination")
+    @Operation(
+            summary = "Get all categories",
+            description = "Returns paginated list of all categories"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Categories retrieved successfully",
+                    content = @Content(schema = @Schema(implementation = CategoryDto.class))),
+            @ApiResponse(responseCode = "403", description = "Access denied")
+    })
     @GetMapping
-    public Page<CategoryDto> findAll(Pageable pageable) {
+    @PreAuthorize("hasRole('USER')")
+    public Page<CategoryDto> getAll(
+            @Parameter(description = "Pagination parameters") Pageable pageable) {
         return categoryService.findAll(pageable);
     }
 
-    @Operation(summary = "Create new category")
-    @ApiResponse(responseCode = "201", description = "Category created successfully",
-            content = @Content(schema = @Schema(implementation = CategoryDto.class)))
+    @Operation(
+            summary = "Create category",
+            description = "Creates a new category (ADMIN only)"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Category created successfully",
+                    content = @Content(schema = @Schema(implementation = CategoryDto.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request body"),
+            @ApiResponse(responseCode = "403", description = "Access denied")
+    })
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public CategoryDto create(
-            @RequestBody
-            @Valid
-            CategoryDto dto) {
+    public CategoryDto createCategory(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Category data to create",
+                    required = true
+            )
+            @RequestBody @Valid CategoryDto dto) {
         return categoryService.save(dto);
     }
 
-    @Operation(summary = "Get category by ID")
+    @Operation(
+            summary = "Get category by ID",
+            description = "Returns a category by its ID"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Category found",
+                    content = @Content(schema = @Schema(implementation = CategoryDto.class))),
+            @ApiResponse(responseCode = "404", description = "Category not found")
+    })
     @GetMapping("/{id}")
-    public CategoryDto getById(
-            @Parameter(description = "ID of the category") @PathVariable Long id) {
+    public CategoryDto getCategoryById(
+            @Parameter(description = "Category ID", example = "1")
+            @PathVariable Long id) {
         return categoryService.getById(id);
     }
 
+    @Operation(
+            summary = "Update category",
+            description = "Updates an existing category by ID (ADMIN only)"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Category updated successfully",
+                    content = @Content(schema = @Schema(implementation = CategoryDto.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request body"),
+            @ApiResponse(responseCode = "404", description = "Category not found"),
+            @ApiResponse(responseCode = "403", description = "Access denied")
+    })
     @PreAuthorize("hasRole('ADMIN')")
-    @Operation(summary = "Update category by ID")
     @PutMapping("/{id}")
-    public CategoryDto update(
-            @Parameter(description = "ID of the category") @PathVariable Long id,
-            @RequestBody CategoryDto dto) {
+    public CategoryDto updateCategory(
+            @Parameter(description = "Category ID", example = "1")
+            @PathVariable Long id,
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Updated category data",
+                    required = true
+            )
+            @RequestBody @Valid CategoryDto dto) {
         return categoryService.update(id, dto);
     }
 
+    @Operation(
+            summary = "Delete category",
+            description = "Deletes category by ID (ADMIN only)"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Category deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Category not found"),
+            @ApiResponse(responseCode = "403", description = "Access denied")
+    })
     @PreAuthorize("hasRole('ADMIN')")
-    @Operation(summary = "Delete category by ID")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void deleteById(@Parameter(description = "ID of the category") @PathVariable Long id) {
+    public void deleteCategory(
+            @Parameter(description = "Category ID", example = "1")
+            @PathVariable Long id) {
         categoryService.deleteById(id);
     }
 
-    @Operation(summary = "Get books by category ID with pagination")
+    @Operation(
+            summary = "Get books by category ID",
+            description = "Returns paginated list of books that belong to a specific category"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Books retrieved successfully",
+                    content = @Content(schema = @Schema(implementation = BookDtoWithoutCategoryIds.class))),
+            @ApiResponse(responseCode = "404", description = "Category not found"),
+            @ApiResponse(responseCode = "403", description = "Access denied")
+    })
     @GetMapping("/{id}/books")
+    @PreAuthorize("hasRole('USER')")
     public Page<BookDtoWithoutCategoryIds> getBooksByCategoryId(
-            @Parameter(description = "ID of the category") @PathVariable Long id,
-            Pageable pageable) {
+            @Parameter(description = "Category ID", example = "1")
+            @PathVariable Long id,
+            @Parameter(description = "Pagination parameters") Pageable pageable) {
         return categoryService.getBooksByCategoryId(id, pageable);
     }
 }
+

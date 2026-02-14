@@ -21,12 +21,12 @@ import org.mapstruct.ReportingPolicy;
 public interface BookMapper {
 
     @Mapping(target = "categories", ignore = true)
-    Book toEntity(CreateBookRequestDto dto);
+    Book toEntity(BookDto dto);
 
     @Mapping(target = "categories", ignore = true)
     BookDto toDto(Book book);
 
-    BookDtoWithoutCategoryIds toDtoWithoutCategoryIds(Book entity);
+    BookDtoWithoutCategoryIds toDtoWithoutCategories(Book entity);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "categories", ignore = true)
@@ -65,7 +65,7 @@ public interface BookMapper {
     }
 
     @AfterMapping
-    default void setCategoryIds(@MappingTarget Book entity, CreateBookRequestDto dto) {
+    default void setCategoryIds(@MappingTarget Book entity, BookDto dto) {
         Set<Category> categories = dto.getCategories().stream()
                 .map(id -> {
                     Category category = new Category();

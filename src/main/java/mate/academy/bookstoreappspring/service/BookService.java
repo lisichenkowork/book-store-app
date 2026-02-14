@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface BookService {
 
-    BookDto createBook(CreateBookRequestDto createBookRequestDto);
+    BookDto createBook(BookDto bookDto);
 
     BookDto findById(Long id);
 

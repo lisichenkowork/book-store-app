@@ -5,7 +5,6 @@ import mate.academy.bookstoreappspring.dto.book.BookDto;
 import mate.academy.bookstoreappspring.dto.book.BookDtoWithoutCategoryIds;
 import mate.academy.bookstoreappspring.dto.book.BookSearchParamsDto;
 import mate.academy.bookstoreappspring.dto.book.BookUpdateRequestDto;
-import mate.academy.bookstoreappspring.dto.book.CreateBookRequestDto;
 import mate.academy.bookstoreappspring.exception.EntityNotFoundException;
 import mate.academy.bookstoreappspring.mapper.BookMapper;
 import mate.academy.bookstoreappspring.model.Book;
@@ -25,7 +24,7 @@ public class BookServiceImpl implements BookService {
     private final BookSpecificationBuilder bookSpecificationBuilder;
 
     @Override
-    public BookDto createBook(CreateBookRequestDto dto) {
+    public BookDto createBook(BookDto dto) {
 
         Book entity = bookMapper.toEntity(dto);
 
@@ -73,8 +72,8 @@ public class BookServiceImpl implements BookService {
     @Override
     public Page<BookDtoWithoutCategoryIds> getBooksByCategoryId(Long id, Pageable pageable) {
 
-        return bookRepository.findAllByCategories_id(id, pageable)
-                .map(bookMapper::toDtoWithoutCategoryIds);
+        return bookRepository.findAllByCategoriesId(id, pageable)
+                .map(bookMapper::toDtoWithoutCategories);
     }
 
     private Book getEntityByIdOrThrow(Long id) {

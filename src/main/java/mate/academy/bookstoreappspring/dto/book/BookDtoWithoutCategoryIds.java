@@ -13,5 +13,4 @@ public class BookDtoWithoutCategoryIds {
     private String description;
     private String coverImage;
     private BigDecimal price;
-    private boolean isDeleted = false;
 }

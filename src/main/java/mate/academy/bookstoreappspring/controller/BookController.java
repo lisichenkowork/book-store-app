@@ -67,8 +67,8 @@ public class BookController {
     )
     public BookDto createBook(
             @Valid
-            @RequestBody CreateBookRequestDto createBookRequestDto) {
-        return bookService.createBook(createBookRequestDto);
+            @RequestBody BookDto bookDto) {
+        return bookService.createBook(bookDto);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
