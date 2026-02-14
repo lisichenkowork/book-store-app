@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 import mate.academy.bookstoreappspring.dto.book.BookDto;
 import mate.academy.bookstoreappspring.dto.book.BookDtoWithoutCategoryIds;
 import mate.academy.bookstoreappspring.dto.book.BookUpdateRequestDto;
-import mate.academy.bookstoreappspring.dto.book.CreateBookRequestDto;
 import mate.academy.bookstoreappspring.model.Book;
 import mate.academy.bookstoreappspring.model.Category;
 import org.mapstruct.AfterMapping;

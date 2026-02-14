@@ -136,7 +136,8 @@ public class CategoryController {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Books retrieved successfully",
-                    content = @Content(schema = @Schema(implementation = BookDtoWithoutCategoryIds.class))),
+                    content = @Content(
+                            schema = @Schema(implementation = BookDtoWithoutCategoryIds.class))),
             @ApiResponse(responseCode = "404", description = "Category not found"),
             @ApiResponse(responseCode = "403", description = "Access denied")
     })
