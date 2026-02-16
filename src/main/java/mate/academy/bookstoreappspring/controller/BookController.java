@@ -4,13 +4,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
-import mate.academy.bookstoreappspring.dto.book.BookCreateRequestDto;
 import mate.academy.bookstoreappspring.dto.book.BookDto;
 import mate.academy.bookstoreappspring.dto.book.BookSearchParamsDto;
 import mate.academy.bookstoreappspring.dto.book.BookUpdateRequestDto;
 import mate.academy.bookstoreappspring.service.BookService;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -42,7 +41,7 @@ public class BookController {
             description = "Returns a list of all books stored in the database. "
                     + "Each book is represented as a BookDto object."
     )
-    public List<BookDto> getAllBooks(Pageable pageable) {
+    public Page<BookDto> getAllBooks(Pageable pageable) {
         return bookService.getAllBooks(pageable);
     }
 
@@ -67,8 +66,8 @@ public class BookController {
     )
     public BookDto createBook(
             @Valid
-            @RequestBody BookCreateRequestDto createBookRequestDto) {
-        return bookService.createBook(createBookRequestDto);
+            @RequestBody BookDto bookDto) {
+        return bookService.createBook(bookDto);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -108,7 +107,7 @@ public class BookController {
                     + "(such as author, title, etc.) provided in BookSearchParamsDto. "
                     + "Returns a list of matching BookDto objects."
     )
-    public List<BookDto> search(
+    public Page<BookDto> search(
             @RequestParam(required = false) String[] authors,
             @RequestParam(required = false) String[] titles,
             Pageable pageable) {
