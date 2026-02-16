@@ -1,5 +1,6 @@
 package mate.academy.bookstoreappspring.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookstoreappspring.model.User;
 import mate.academy.bookstoreappspring.repository.user.UserRepository;
@@ -14,6 +15,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
+    @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findUserByEmail(username)

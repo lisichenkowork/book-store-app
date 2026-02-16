@@ -13,6 +13,5 @@ public class CategoryDto {
     @Size(min = 1, max = 255)
     private String name;
 
-    @NotBlank
     private String description;
 }
