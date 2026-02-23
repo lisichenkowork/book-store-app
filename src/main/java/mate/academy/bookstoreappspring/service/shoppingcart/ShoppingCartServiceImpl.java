@@ -1,6 +1,7 @@
 package mate.academy.bookstoreappspring.service.shoppingcart;
 
 import jakarta.transaction.Transactional;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookstoreappspring.dto.book.AddBookToCartRequestDto;
 import mate.academy.bookstoreappspring.dto.cartitem.CartItemDto;
@@ -15,6 +16,7 @@ import mate.academy.bookstoreappspring.model.ShoppingCart;
 import mate.academy.bookstoreappspring.model.User;
 import mate.academy.bookstoreappspring.repository.shoppingcart.ShoppingCartRepository;
 import mate.academy.bookstoreappspring.service.BookService;
+import mate.academy.bookstoreappspring.service.cartitem.CartItemService;
 import mate.academy.bookstoreappspring.service.cartitem.CartItemServiceImpl;
 import mate.academy.bookstoreappspring.service.user.UserService;
 import org.springframework.stereotype.Service;
@@ -28,9 +30,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final ShoppingCartMapper shoppingCartMapper;
     private final BookService bookService;
     private final CartItemMapper cartItemMapper;
-    private final CartItemServiceImpl cartItemService;
-    private final BookMapper bookMapper;
-
+    private final CartItemService cartItemService;
+    
     @Transactional
     @Override
     public ShoppingCartDto getShoppingCart() {
@@ -63,10 +64,16 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             UpdateCartItemQuantityRequestDto dto) {
         if (dto.getQuantity() <= 0) {
             throw new IllegalArgumentException(
-                    "Quantity cannot be 0 o less than 0, quantity is: "
+                    "Quantity cannot be 0 or less than 1, quantity is: "
                             + dto.getQuantity());
         }
-        CartItem cartItemById = cartItemService.getCartItemOrThrow(cartItemId);
+
+        ShoppingCart shoppingCartEntity = getShoppingCartEntityForLoggedUser();
+
+        CartItem cartItemById = cartItemService
+                        .findCartItemByIdAndShoppingCartId(cartItemId, shoppingCartEntity.getId());
+
+
         CartItem updated = cartItemService.updateCartItem(cartItemById, dto.getQuantity());
 
         return cartItemMapper.toDto(updated);
@@ -74,7 +81,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void deleteCartItem(Long cartItemId) {
-        cartItemService.deleteCartItem(cartItemId);
+        ShoppingCart shoppingCartEntity = getShoppingCartEntityForLoggedUser();
+        cartItemService.deleteCartItem(cartItemId, shoppingCartEntity.getId());
     }
 
     private ShoppingCart getOrCreateShoppingCart(User user) {
@@ -91,6 +99,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     private User getLoggedUser() {
         return userService.getLoggedUser();
+    }
+
+    private ShoppingCart getShoppingCartEntityForLoggedUser() {
+        User loggedUser = getLoggedUser();
+
+        return getOrCreateShoppingCart(loggedUser);
     }
 
 }

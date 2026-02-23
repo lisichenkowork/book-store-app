@@ -7,6 +7,7 @@ import mate.academy.bookstoreappspring.model.Book;
 import mate.academy.bookstoreappspring.model.CartItem;
 import mate.academy.bookstoreappspring.model.ShoppingCart;
 import mate.academy.bookstoreappspring.repository.cartitem.CartItemRepository;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -42,17 +43,15 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public CartItem getCartItemOrThrow(Long id) {
-        return cartItemRepository
-                .getCartItemById(id)
-                .orElseThrow(
-                        () -> new EntityNotFoundException("Cart Item not found with id: " + id));
+    public CartItem findCartItemByIdAndShoppingCartId(Long id, Long shoppingCartId) {
+        return cartItemRepository.getCartItemByIdAndShoppingCartId(id, shoppingCartId)
+                .orElseThrow(()-> new EntityNotFoundException("Cart Item not found with this id:" + id));
     }
 
     @Override
-    public void deleteCartItem(Long cartItemId) {
+    public void deleteCartItem(Long cartItemId, Long shoppingCartId) {
         //checks if cartItem exist before deleting
-        CartItem cartItem = getCartItemOrThrow(cartItemId);
+        CartItem cartItem = findCartItemByIdAndShoppingCartId(cartItemId, shoppingCartId);
 
         cartItemRepository.delete(cartItem);
     }

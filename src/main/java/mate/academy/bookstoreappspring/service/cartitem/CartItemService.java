@@ -1,5 +1,6 @@
 package mate.academy.bookstoreappspring.service.cartitem;
 
+import java.util.Optional;
 import mate.academy.bookstoreappspring.model.Book;
 import mate.academy.bookstoreappspring.model.CartItem;
 import mate.academy.bookstoreappspring.model.ShoppingCart;
@@ -10,8 +11,8 @@ public interface CartItemService {
 
     CartItem updateCartItem(CartItem cartItem, Integer quantity);
 
-    CartItem getCartItemOrThrow(Long id);
+    CartItem findCartItemByIdAndShoppingCartId(Long id, Long userId);
 
-    void deleteCartItem(Long cartItemId);
+    void deleteCartItem(Long cartItemId, Long shoppingCartId);
 
 }

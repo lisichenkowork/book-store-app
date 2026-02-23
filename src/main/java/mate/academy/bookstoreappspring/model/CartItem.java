@@ -21,7 +21,6 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @Table(name = "cart_item")
-@ToString
 public class CartItem {
 
     @Id
