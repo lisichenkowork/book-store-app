@@ -1,6 +1,5 @@
 package mate.academy.bookstoreappspring.service.cartitem;
 
-import java.util.Optional;
 import mate.academy.bookstoreappspring.model.Book;
 import mate.academy.bookstoreappspring.model.CartItem;
 import mate.academy.bookstoreappspring.model.ShoppingCart;

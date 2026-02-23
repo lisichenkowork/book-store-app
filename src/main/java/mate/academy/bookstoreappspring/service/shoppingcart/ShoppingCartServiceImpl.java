@@ -1,13 +1,11 @@
 package mate.academy.bookstoreappspring.service.shoppingcart;
 
 import jakarta.transaction.Transactional;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookstoreappspring.dto.book.AddBookToCartRequestDto;
 import mate.academy.bookstoreappspring.dto.cartitem.CartItemDto;
 import mate.academy.bookstoreappspring.dto.cartitem.UpdateCartItemQuantityRequestDto;
 import mate.academy.bookstoreappspring.dto.shoppingcart.ShoppingCartDto;
-import mate.academy.bookstoreappspring.mapper.BookMapper;
 import mate.academy.bookstoreappspring.mapper.CartItemMapper;
 import mate.academy.bookstoreappspring.mapper.ShoppingCartMapper;
 import mate.academy.bookstoreappspring.model.Book;
@@ -17,7 +15,6 @@ import mate.academy.bookstoreappspring.model.User;
 import mate.academy.bookstoreappspring.repository.shoppingcart.ShoppingCartRepository;
 import mate.academy.bookstoreappspring.service.BookService;
 import mate.academy.bookstoreappspring.service.cartitem.CartItemService;
-import mate.academy.bookstoreappspring.service.cartitem.CartItemServiceImpl;
 import mate.academy.bookstoreappspring.service.user.UserService;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +28,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final BookService bookService;
     private final CartItemMapper cartItemMapper;
     private final CartItemService cartItemService;
-    
+
     @Transactional
     @Override
     public ShoppingCartDto getShoppingCart() {
@@ -71,8 +68,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart shoppingCartEntity = getShoppingCartEntityForLoggedUser();
 
         CartItem cartItemById = cartItemService
-                        .findCartItemByIdAndShoppingCartId(cartItemId, shoppingCartEntity.getId());
-
+                .findCartItemByIdAndShoppingCartId(cartItemId, shoppingCartEntity.getId());
 
         CartItem updated = cartItemService.updateCartItem(cartItemById, dto.getQuantity());
 

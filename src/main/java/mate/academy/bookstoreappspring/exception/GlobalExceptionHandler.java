@@ -65,13 +65,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .body(ex.getMessage());
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<?> handleAccessDeniedException(AccessDeniedException ex) {
-        return ResponseEntity
-                .status(HttpStatus.FORBIDDEN)
-                .body(ex.getMessage());
-    }
-
     private Map<String, Object> body(HttpStatus status, String message) {
         return Map.of(
                 "timestamp", LocalDateTime.now(),

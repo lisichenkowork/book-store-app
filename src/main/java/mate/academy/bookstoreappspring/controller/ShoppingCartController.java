@@ -9,7 +9,6 @@ import mate.academy.bookstoreappspring.dto.cartitem.CartItemDto;
 import mate.academy.bookstoreappspring.dto.cartitem.UpdateCartItemQuantityRequestDto;
 import mate.academy.bookstoreappspring.dto.shoppingcart.ShoppingCartDto;
 import mate.academy.bookstoreappspring.service.shoppingcart.ShoppingCartService;
-import mate.academy.bookstoreappspring.service.shoppingcart.ShoppingCartServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
