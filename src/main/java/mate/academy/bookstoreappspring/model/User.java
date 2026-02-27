@@ -45,7 +45,7 @@ public class User implements UserDetails {
     @Column(name = "shipping_address")
     private String shippingAddress;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),

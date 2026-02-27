@@ -20,11 +20,13 @@ public class CategoryServiceImpl implements CategoryService {
     private final BookService bookService;
     private final CategoryMapper mapper;
 
+    @Override
     public Page<CategoryDto> findAll(Pageable pageable) {
         return categoryRepository.findAll(pageable)
                 .map(mapper::toDto);
     }
 
+    @Override
     public CategoryDto save(CategoryDto dto) {
         Category entity = mapper.toEntity(dto);
 
@@ -33,12 +35,14 @@ public class CategoryServiceImpl implements CategoryService {
         return mapper.toDto(saved);
     }
 
+    @Override
     public CategoryDto getById(Long id) {
         Category categoryById = getByIdOrThrow(id);
 
         return mapper.toDto(categoryById);
     }
 
+    @Override
     public CategoryDto update(Long id, CategoryDto dto) {
         Category categoryById = getByIdOrThrow(id);
 
@@ -49,12 +53,14 @@ public class CategoryServiceImpl implements CategoryService {
         return mapper.toDto(saved);
     }
 
+    @Override
     public void deleteById(Long id) {
         Category categoryById = getByIdOrThrow(id);
 
         categoryRepository.delete(categoryById);
     }
 
+    @Override
     public Page<BookDtoWithoutCategoryIds> getBooksByCategoryId(Long id, Pageable pageable) {
         existsByIdOrThrow(id);
         return bookService.getBooksByCategoryId(id, pageable);

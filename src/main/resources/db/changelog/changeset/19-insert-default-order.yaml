@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: 19-insert-default-order
+      author: max
+      changes:
+        - insert:
+            tableName: orders
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 1
+              - column:
+                  name: user_id
+                  valueNumeric: 1
+              - column:
+                  name: status
+                  value: PENDING
+              - column:
+                  name: total
+                  valueNumeric: 100.00
+              - column:
+                  name: order_date
+                  valueDate: "2026-02-23T10:00:00"
+              - column:
+                  name: shipping_address
+                  value: "123 Main St, Poznan, Poland"
+
+

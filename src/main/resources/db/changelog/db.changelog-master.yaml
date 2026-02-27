@@ -23,3 +23,19 @@ databaseChangeLog:
       file: db/changelog/changeset/11-insert-default-categories.yaml
   - include:
       file: db/changelog/changeset/12-insert-default-books-categories.yaml
+  - include:
+      file: db/changelog/changeset/13-create-shopping-cart-table.yaml
+  - include:
+      file: db/changelog/changeset/14-create-cart_item-table.yaml
+  - include:
+      file: db/changelog/changeset/15-insert-default-shopping-cart.yaml
+  - include:
+      file: db/changelog/changeset/16-insert-default-cart-items.yaml
+  - include:
+      file: db/changelog/changeset/17-create-order-table.yaml
+  - include:
+      file: db/changelog/changeset/18-create-order-item-table.yaml
+  - include:
+      file: db/changelog/changeset/19-insert-default-order.yaml
+  - include:
+      file: db/changelog/changeset/20-insert-default-order-item.yaml

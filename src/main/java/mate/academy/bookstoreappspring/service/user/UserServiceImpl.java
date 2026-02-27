@@ -4,12 +4,15 @@ import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookstoreappspring.dto.user.UserRegistrationRequestDto;
 import mate.academy.bookstoreappspring.dto.user.UserResponseDto;
+import mate.academy.bookstoreappspring.exception.EntityNotFoundException;
 import mate.academy.bookstoreappspring.exception.RegistrationException;
 import mate.academy.bookstoreappspring.mapper.UserMapper;
 import mate.academy.bookstoreappspring.model.Role;
 import mate.academy.bookstoreappspring.model.User;
 import mate.academy.bookstoreappspring.repository.role.RoleRepository;
 import mate.academy.bookstoreappspring.repository.user.UserRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +42,24 @@ public class UserServiceImpl implements UserService {
         User saved = userRepository.save(entity);
 
         return userMapper.toResponseDto(saved);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+
+        return userRepository.findUserByEmail(username)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("User not exist with this username: "
+                                + username));
+    }
+
+    @Override
+    public User getLoggedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String email = authentication.getName();
+
+        return userRepository.getUserByEmail(email).orElseThrow(
+                () -> new EntityNotFoundException("User not found with this email: " + email));
     }
 }

@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: 15-insert-default-shopping-cart
+      author: max
+      changes:
+        - insert:
+            tableName: shopping_cart
+            columns:
+              - column:
+                  name: user_id
+                  valueNumeric: 1
