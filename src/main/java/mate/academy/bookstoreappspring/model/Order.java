@@ -1,6 +1,5 @@
 package mate.academy.bookstoreappspring.model;
 
-import com.fasterxml.jackson.core.FormatFeature;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -20,7 +19,6 @@ import java.util.HashSet;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.logging.log4j.util.Lazy;
 
 @Entity
 @Getter
