@@ -2,6 +2,7 @@ package mate.academy.bookstoreappspring.controller.auth;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import mate.academy.bookstoreappspring.dto.user.UserLoginRequestDto;
 import mate.academy.bookstoreappspring.dto.user.UserLoginResponseDto;
 import mate.academy.bookstoreappspring.dto.user.UserRegistrationRequestDto;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -30,6 +32,7 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public UserLoginResponseDto login(@Valid @RequestBody UserLoginRequestDto request) {
+        log.info("Trying to login");
         return authenticationService.authenticate(request);
     }
 }

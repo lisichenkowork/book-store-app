@@ -55,15 +55,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return cartItemMapper.toDto(addedCartItem);
     }
 
+    @Transactional
     @Override
     public CartItemDto updateCartItemQuantity(
             Long cartItemId,
             UpdateCartItemQuantityRequestDto dto) {
-        if (dto.getQuantity() <= 0) {
-            throw new IllegalArgumentException(
-                    "Quantity cannot be 0 or less than 1, quantity is: "
-                            + dto.getQuantity());
-        }
 
         ShoppingCart shoppingCartEntity = getShoppingCartEntityForLoggedUser();
 
@@ -75,6 +71,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return cartItemMapper.toDto(updated);
     }
 
+    @Transactional
     @Override
     public void deleteCartItem(Long cartItemId) {
         ShoppingCart shoppingCartEntity = getShoppingCartEntityForLoggedUser();
