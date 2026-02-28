@@ -88,7 +88,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .body(body(HttpStatus.BAD_REQUEST, ex.getMessage()));
     }
 
-
     private Map<String, Object> body(HttpStatus status, String message) {
         return Map.of(
                 "timestamp", LocalDateTime.now(),

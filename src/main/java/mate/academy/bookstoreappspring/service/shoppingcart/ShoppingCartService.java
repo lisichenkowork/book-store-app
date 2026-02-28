@@ -1,6 +1,5 @@
 package mate.academy.bookstoreappspring.service.shoppingcart;
 
-import java.util.List;
 import mate.academy.bookstoreappspring.dto.book.AddBookToCartRequestDto;
 import mate.academy.bookstoreappspring.dto.cartitem.CartItemDto;
 import mate.academy.bookstoreappspring.dto.cartitem.UpdateCartItemQuantityRequestDto;

@@ -52,7 +52,10 @@ public class OrderServiceImpl implements OrderService {
 
         ShoppingCart shoppingCart = getValidShoppingCart(loggedUser);
 
-        Order order = createOrder(loggedUser, dto.getShippingAddress(), shoppingCart.getCartItems());
+        Order order = createOrder(
+                loggedUser,
+                dto.getShippingAddress(),
+                shoppingCart.getCartItems());
 
         return orderMapper.toDto(orderRepository.save(order));
     }
@@ -61,8 +64,9 @@ public class OrderServiceImpl implements OrderService {
     public Set<OrderItemDto> getOrderItem(Long orderId) {
         User loggedUser = userService.getLoggedUser();
 
-        Order orderById = orderRepository.findByIdAndUserId(orderId, loggedUser.getId()).orElseThrow(
-                () -> new AccessDeniedException("You can access only your own order"));
+        Order orderById = orderRepository
+                .findByIdAndUserId(orderId, loggedUser.getId()).orElseThrow(
+                        () -> new AccessDeniedException("You can access only your own order"));
 
         Set<OrderItem> orderItems = orderById.getOrderItems();
 
@@ -75,7 +79,9 @@ public class OrderServiceImpl implements OrderService {
         return getOrderItem(orderId)
                 .stream()
                 .filter(o -> o.getId().equals(orderItemId)).findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("OrderItem not found with id: " + orderItemId));
+                .orElseThrow(
+                        () -> new EntityNotFoundException(
+                                "OrderItem not found with id: " + orderItemId));
     }
 
     @Override
