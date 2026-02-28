@@ -17,7 +17,7 @@ databaseChangeLog:
                   value: "9780441478125"
               - column:
                   name: price
-                  valueNumeric: 39.90
+                  valueNumeric: 40.00
               - column:
                   name: description
                   value: "A science fiction novel exploring gender, politics, and culture on the planet Gethen."
@@ -42,7 +42,7 @@ databaseChangeLog:
                   value: "9780812521392"
               - column:
                   name: price
-                  valueNumeric: 42.50
+                  valueNumeric: 50.00
               - column:
                   name: description
                   value: "A dark fantasy novel following a mercenary company serving powerful and dangerous rulers."

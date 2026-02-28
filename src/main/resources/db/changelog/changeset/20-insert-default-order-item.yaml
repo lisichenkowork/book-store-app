@@ -14,10 +14,28 @@ databaseChangeLog:
                   valueNumeric: 1
               - column:
                   name: book_id
+                  valueNumeric: 2
+              - column:
+                  name: quantity
+                  valueNumeric: 3
+              - column:
+                  name: price
+                  valueNumeric: 120
+        - insert:
+            tableName: order_items
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 2
+              - column:
+                  name: order_id
+                  valueNumeric: 1
+              - column:
+                  name: book_id
                   valueNumeric: 1
               - column:
                   name: quantity
-                  valueNumeric: 1
+                  valueNumeric: 2
               - column:
                   name: price
-                  valueNumeric: 100.00
+                  valueNumeric: 100
