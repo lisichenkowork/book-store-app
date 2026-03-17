@@ -17,7 +17,7 @@ databaseChangeLog:
                   value: PENDING
               - column:
                   name: total
-                  valueNumeric: 100.00
+                  valueNumeric: 220.00
               - column:
                   name: order_date
                   valueDate: "2026-02-23T10:00:00"

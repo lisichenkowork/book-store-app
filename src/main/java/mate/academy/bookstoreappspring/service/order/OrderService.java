@@ -1,19 +1,20 @@
 package mate.academy.bookstoreappspring.service.order;
 
-import lombok.RequiredArgsConstructor;
+import java.util.Set;
+import mate.academy.bookstoreappspring.dto.order.CreateOrderRequestDto;
 import mate.academy.bookstoreappspring.dto.order.OrderDto;
-import mate.academy.bookstoreappspring.mapper.OrderMapper;
-import mate.academy.bookstoreappspring.repository.order.OrderRepository;
-import org.springframework.stereotype.Service;
+import mate.academy.bookstoreappspring.dto.order.UpdateStatusRequestDto;
+import mate.academy.bookstoreappspring.dto.orderitem.OrderItemDto;
 
-@Service
-@RequiredArgsConstructor
-public class OrderService {
+public interface OrderService {
 
-    private final OrderRepository orderRepository;
-    private final OrderMapper orderMapper;
+    Set<OrderDto> findOrdersForCurrentUser();
 
-    public OrderDto getOrderById(Long id) {
-        return orderMapper.toDto(orderRepository.getOrderById(id));
-    }
+    OrderDto placeOrder(CreateOrderRequestDto dto);
+
+    Set<OrderItemDto> getOrderItem(Long orderId);
+
+    OrderItemDto getConcreteOrderItem(Long orderId, Long orderItemId);
+
+    OrderDto updateStatusForOrder(Long orderId, UpdateStatusRequestDto dto);
 }
