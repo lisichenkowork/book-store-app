@@ -33,5 +33,14 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${MYSQLDB_ROOT_PASSWORD}
       JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:$DEBUG_PORT"
 
+  frontend:
+    depends_on:
+      - app
+    restart: unless-stopped
+    image: book-store-frontend
+    build: ./frontend
+    ports:
+      - $FRONTEND_LOCAL_PORT:80
+
 volumes:
   mysql_data:
