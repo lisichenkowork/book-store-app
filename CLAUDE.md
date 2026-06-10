@@ -41,7 +41,7 @@ Port mapping comes from `.env`, **not** `application.properties`:
 - Frontend (Angular/nginx): host **4200** → container 80 (`FRONTEND_LOCAL_PORT`); open `http://localhost:4200`
 - Debug (JDWP): port **5005** is exposed for remote debugging
 
-The backend image's Dockerfile copies a pre-built `target/*.jar`, so **run `./mvnw clean package` before `docker compose build app`** or the image will ship a stale jar (a cached COPY layer will silently reuse an old jar — use `docker compose build --no-cache app` if in doubt).
+The backend `Dockerfile` is **multi-stage**: it builds the jar with Maven *inside* the image (`mvn package -DskipTests`), so `docker compose up -d` is fully self-contained — no local `./mvnw` build is needed first. After changing backend code, rebuild with `docker compose up -d --build app` (use `--no-cache` if a layer looks stale).
 
 Note: `application.properties` (localhost:3306, password `password`) is for non-Docker local runs only and intentionally differs from the Docker `.env` values — a locally-run app will not reach the containerized DB without overriding these.
 
