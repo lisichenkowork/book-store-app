@@ -1,0 +1,31 @@
+# Throwaway compose for an isolated end-to-end smoke test.
+# Only the frontend publishes a host port (4200); app and mysqldb talk over
+# the internal network, so this does not conflict with any running stack.
+services:
+  mysqldb:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=sa
+      - MYSQL_DATABASE=book_app
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  app:
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+    image: book-store-app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/book_app
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: sa
+
+  frontend:
+    depends_on:
+      - app
+    image: book-store-frontend
+    ports:
+      - "4200:80"

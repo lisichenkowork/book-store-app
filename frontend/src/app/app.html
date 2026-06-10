@@ -1,0 +1,49 @@
+<mat-toolbar color="primary">
+  <span class="brand" routerLink="/books">📚 Book Store</span>
+
+  @if (isLoggedIn()) {
+    <nav class="nav-links">
+      <a mat-button routerLink="/books" routerLinkActive="active">Книги</a>
+      <a mat-button routerLink="/categories" routerLinkActive="active">Категорії</a>
+
+      @if (isUser()) {
+        <a mat-button routerLink="/cart" routerLinkActive="active">Кошик</a>
+        <a mat-button routerLink="/orders" routerLinkActive="active">Замовлення</a>
+      }
+
+      @if (isAdmin()) {
+        <a mat-button routerLink="/books/new" routerLinkActive="active">
+          <mat-icon>add</mat-icon> Книга
+        </a>
+        <a mat-button routerLink="/categories/new" routerLinkActive="active">
+          <mat-icon>add</mat-icon> Категорія
+        </a>
+      }
+    </nav>
+  }
+
+  <span class="spacer"></span>
+
+  @if (isLoggedIn()) {
+    <button mat-button [matMenuTriggerFor]="userMenu">
+      <mat-icon>account_circle</mat-icon>
+      {{ currentUser()?.email }}
+      @if (isAdmin()) { <span class="role-chip">ADMIN</span> }
+    </button>
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item disabled>
+        Ролі: {{ currentUser()?.roles?.join(', ') }}
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon> Вийти
+      </button>
+    </mat-menu>
+  } @else {
+    <a mat-button routerLink="/login">Увійти</a>
+    <a mat-button routerLink="/register">Реєстрація</a>
+  }
+</mat-toolbar>
+
+<main>
+  <router-outlet />
+</main>

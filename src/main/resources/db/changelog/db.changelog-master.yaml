@@ -39,3 +39,5 @@ databaseChangeLog:
       file: db/changelog/changeset/19-insert-default-order.yaml
   - include:
       file: db/changelog/changeset/20-insert-default-order-item.yaml
+  - include:
+      file: db/changelog/changeset/21-set-demo-passwords.yaml

@@ -1,6 +1,10 @@
 HELP.md
 target/
 .mvn/wrapper/maven-wrapper.jar
+
+### Secrets & local notes ###
+.env
+docs/
 !**/src/main/**/target/
 !**/src/test/**/target/
 

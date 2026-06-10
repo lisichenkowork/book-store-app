@@ -1,0 +1,10 @@
+target/
+frontend/
+docs/
+.git/
+.github/
+.idea/
+.vscode/
+.claude/
+*.iml
+HELP.md
